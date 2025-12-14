@@ -1,0 +1,28 @@
+UI menu.c32
+PROMPT 0
+TIMEOUT 50
+DEFAULT win11_install
+
+MENU TITLE ==== ELEGANT OS DEPLOYER ====
+
+LABEL arch_ram
+    MENU LABEL Arch Linux (Diskless / RAM Boot)
+    KERNEL /arch/vmlinuz-linux
+    INITRD /arch/initramfs-linux.img
+    # Zarafet Burda: 192.168.100.1 sunucusunu hedef gösteriyoruz
+    # 'ip=dhcp' diyerek ağ ayarlarını almasını söylüyoruz
+    # Şimdilik NFS root bağlamıyoruz, sadece kernel boot test ediyoruz.
+    APPEND archisobasedir=arch archiso_http_srv=http://192.168.100.1/arch/ ip=dhcp copytoram=n
+
+MENU SEPARATOR
+
+LABEL life
+    MENU LABEL "GRANDER, MORE SUBTLE, MORE ELEGANT."
+
+
+MENU SEPARATOR
+
+LABEL win11_install
+    MENU LABEL Windows 11 Kurulumu 
+    COM32 linux.c32
+    APPEND wimboot initrdfile=bootmgr.exe,bcd,boot.sdi,boot.wim,winpeshl.ini,install.bat
